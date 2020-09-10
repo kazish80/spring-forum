@@ -1,0 +1,49 @@
+<div th:fragment="home_contents">
+	<div class="container-fluid">
+		<form class="navbar-form navbar-left" role="search" method="get" th:action="${'/search'}">
+			<div class="form-group">
+				<input type="text" name="query" th:value="${query}" size="50" class="form-control" placeholder="キーワードを入力">
+			</div>
+			<button type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+				検索
+			</button>
+			<a th:href="@{'/post/new'}" class="btn btn-primary" role="button">質問する</a>
+		</form>
+	</div>
+
+	<div class="container-fluid">
+		<table class="table table-striped">
+            <tr>
+                <th>タイトル</th>
+                <th>投稿日</th>
+                <th>回答数</th>
+                <th>最終更新日</th>
+            </tr>
+            <tr th:each="post:${postList}">
+                <td><a th:href="@{'/post/'+${post.postId}}"><span th:text="${post.postTitle}"></span></a></td>
+                <td th:text="${#dates.format(post.createdAt, 'yyyy/MM/dd')}"></td>
+                <td th:text="${post.numReplies}"></td>
+                <td th:text="${#dates.format(post.updatedAt, 'yyyy/MM/dd')}"></td>
+            </tr>
+        </table>
+		<nav aria-label="page navigation">
+			<ul class="pagination">
+				<li class="page-item" th:class="${page.first} ? 'disabled':''" style="display:inline">
+					<span th:if="${page.first}">&laquo;</span>
+					<a th:if="${not page.first}" th:href="@{${url}(page=0)}">&laquo;</a>
+				</li>
+				<li class="page-item" th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
+					<span th:if='${i}==${page.number}' th:text='${i+1}'></span>
+					<a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
+						<span th:text='${i+1}'></span>
+					</a>
+				</li>
+				<li class="page-item" th:class="${page.last} ? 'disabled':''" style="display:inline">
+					<span th:if="${page.last}">&raquo;</span>
+					<a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">&raquo;</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>

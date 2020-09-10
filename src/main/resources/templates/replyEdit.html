@@ -1,0 +1,18 @@
+<div th:fragment="replyEdit_contents">
+	<div class="col-sm-offset-1 col-sm-9">
+		<h1>回答の編集</h1>
+		<br/>
+		<form id="reply_form" method="post" th:action="@{'/post/' + ${postId} + '/reply/' + ${replyId} + '/edit'}">
+			<div class="form-group" th:classappend="${replyMsgError}?'has-error'">
+				<h4><label class="control-label"><b>&nbsp;回答</b></label></h4>
+				<textarea rows="10" class="form-control" name="replyMsg" th:text="${replyMsg}"></textarea>
+				<span class="text-danger" th:if="${replyMsgError}" th:text="回答を入力してください"></span>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-default" name="action" th:value="cancel">キャンセル</button>
+				&nbsp;
+				<button type="submit" class="btn btn-primary" name="action" th:value="send">送信</button>
+			</div>
+		</form>
+	</div>
+</div>

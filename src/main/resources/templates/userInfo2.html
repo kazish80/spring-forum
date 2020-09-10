@@ -1,0 +1,40 @@
+<div th:fragment="userInfo2_contents">
+	<div class="container text-center">
+		<h3 th:text="${#authentication.principal.appUserName}"></h3>
+		<p th:text="${#authentication.principal.userId}"></p>
+		<a th:href="@{'/user/edit'}">編集</a>
+
+		<div class="user-info-post-list">
+			<h4><b>投稿一覧</b></h4>
+			<ul class="nav nav-tabs">
+  				<li role="presentation"><a th:href="@{'/user/info'}">質問</a></li>
+  				<li role="presentation" class="active"><a th:href="@{'/user/info2'}">回答</a></li>
+			</ul>
+
+			<table class="table table-striped">
+            	<tr th:each="post:${postList}">
+                	<td align="left"><a th:href="@{'/post/'+${post.postId}}"><span th:text="${post.postTitle}"></span></a></td>
+                	<td th:text="${#dates.format(post.createdAt, 'yyyy/MM/dd')}"></td>
+            	</tr>
+        	</table>
+			<nav aria-label="page navigation">
+				<ul class="pagination">
+					<li class="page-item" th:class="${page.first} ? 'disabled':''" style="display:inline">
+						<span th:if="${page.first}">&laquo;</span>
+						<a th:if="${not page.first}" th:href="@{${url}(page=0)}">&laquo;</a>
+					</li>
+					<li class="page-item" th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
+						<span th:if='${i}==${page.number}' th:text='${i+1}'></span>
+						<a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
+							<span th:text='${i+1}'></span>
+						</a>
+					</li>
+					<li class="page-item" th:class="${page.last} ? 'disabled':''" style="display:inline">
+						<span th:if="${page.last}">&raquo;</span>
+						<a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">&raquo;</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>

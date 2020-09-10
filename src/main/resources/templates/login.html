@@ -1,0 +1,35 @@
+<div th:fragment="login_contents">
+	<div class="container text-center">
+		<h1>ログイン</h1>
+		<br/>
+
+		<form method="post" th:action="@{/login}">
+
+			<!-- エラーメッセージ -->
+			<div th:if="${error != null}">
+				<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+					th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+					class="text-danger">
+				</p>
+			</div>
+
+			<table align="center" class="table-login">
+				<tr>
+					<td><label for="userId">メールアドレス</label></td>
+					<td><input type="text" name="userId" size="30" id="userId"></td>
+				</tr>
+				<tr>
+					<td><label for="password">パスワード</label></td>
+					<td><input type="password" name="password" size="30" id="password"></td>
+				</tr>
+			</table>
+
+			<button class="btn btn-primary" type="submit">ログイン</button>
+
+		</form>
+		<br/>
+		アカウントをお持ちではありませんか？<a th:href="@{'/signup'}">登録はこちら</a>
+	</div>
+</div>
+
+

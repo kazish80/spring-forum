@@ -1,0 +1,99 @@
+<div th:fragment="postDetail_contents">
+	<div id="post-detail">
+		<!-- 質問 -->
+		<section id="question">
+			<div class="container-fluid">
+				<div class="col-xs-12">
+					<h3 th:text="${'Q : ' + post.postTitle}"></h3>
+					<hr>
+					<div class="row">
+						<div class="col-xs-9 view-post-msg">
+							<p th:text="${post.postMsg}"></p>
+							<br/>
+						</div>
+						<div class="col-xs-2 post-info">
+							<p th:text="${'投稿日時 : ' + #dates.format(post.createdAt, 'yyyy/MM/dd HH:mm')}"></p>
+							<span class="glyphicon glyphicon-user" aria-hidden="true" th:text="${post.postUserName}"></span>
+							<br/>
+							<div sec:authorize="isAuthenticated()">
+								<div th:if="${post.postUserId.equals(#authentication.principal.userId)}">
+									<a th:href="@{'/post/' + ${post.postId} + '/edit'}">
+										<span class="fas fa-edit edit-btn"></span> 編集
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 回答 -->
+		<!-- 回答が1件以上ある場合 -->
+		<div th:if="${post.numReplies > 0}">
+			<section id="answer">
+				<div class="container-fluid">
+					<div class="col-xs-12">
+						<h4>&nbsp;&nbsp;<b th:text="${post.numReplies + '件の回答'}"></b></h4>
+
+						<div th:each="reply : ${replyList}">
+							<hr>
+							<div class="row">
+								<div class="col-xs-9 view-post-msg">
+									<p th:text="${reply.replyMsg}"></p>
+								</div>
+								<div class="col-xs-2 post-info">
+									<p th:text="${'回答日時 : ' + #dates.format(reply.createdAt, 'yyyy/MM/dd HH:mm')}"></p>
+									<span class="glyphicon glyphicon-user" aria-hidden="true" th:text="${reply.replyUserName}"></span>
+									<br/>
+									<div sec:authorize="isAuthenticated()">
+										<div th:if="${reply.replyUserId.equals(#authentication.principal.userId)}">
+											<a th:href="@{'/post/' + ${post.postId} + '/reply/' + ${reply.replyId} + '/edit'}">
+												<span class="fas fa-edit edit-btn"></span> 編集
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- 回答フォーム -->
+		<section id="answer-form">
+			<div class="container-fluid">
+				<div class="col-xs-9">
+					<hr>
+					<!-- 回答するボタン押される前 -->
+					<div th:if="${replyClicked == false}">
+						<a th:href="@{'/post/' + ${post.postId} + '/reply'}" class="btn btn-primary" role="button">回答する</a>
+					</div>
+
+					<!-- 回答するボタン押され後 -->
+					<div th:if="${replyClicked == true}">
+						<form id="reply_form" method="post" th:action="@{'/post/' + ${post.postId} + '/reply'}">
+							<div class="form-group" th:classappend="${replyMsgError}?'has-error'">
+								<h4><label class="control-label"><b>&nbsp;回答</b></label></h4>
+								<textarea rows="10" class="form-control" name="replyMsg" th:value="${replyMsg_value}"></textarea>
+								<span class="text-danger" th:if="${replyMsgError}" th:text="回答を入力してください"></span>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-default" name="action" th:value="cancel">キャンセル</button>
+								&nbsp;
+								<button type="submit" class="btn btn-primary" name="action" th:value="send">送信</button>
+							</div>
+						</form>
+						<script>
+    					window.onload = function() {
+    						location.hash='reply_form';
+    					}
+						</script>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+

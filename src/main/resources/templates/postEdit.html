@@ -1,0 +1,27 @@
+<div th:fragment="postEdit_contents">
+	<div class="col-sm-offset-1 col-sm-10">
+		<h1>質問の編集</h1>
+		<br/>
+		<form method="post" th:action="@{'/post/' + *{postId} + '/edit'}" th:object="${postForm}">
+			<div class="form-group">
+				<input type="hidden" th:field="*{postId}">
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('postTitle')}?'has-error'">
+				<label class="control-label">タイトル</label>
+				<input type="text" class="form-control" th:field="*{postTitle}">
+				<span class="text-danger" th:if="${#fields.hasErrors('postTitle')}" th:errors="*{postTitle}">postTitle error</span>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('postMsg')}?'has-error'">
+				<label class="control-label">内容</label>
+				<br/>
+				<textarea rows="15" class="form-control" th:field="*{postMsg}"></textarea>
+				<span class="text-danger" th:if="${#fields.hasErrors('postMsg')}" th:errors="*{postMsg}">postMsg error</span>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-default" name="action" th:value="cancel">キャンセル</button>
+				&nbsp;
+				<button type="submit" class="btn btn-primary" name="action" th:value="send">送信</button>
+			</div>
+		</form>
+	</div>
+</div>

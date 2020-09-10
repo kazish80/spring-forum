@@ -1,0 +1,45 @@
+<div th:fragment="userEdit_contents">
+	<div class="container text-center">
+		<h1>アカウント編集</h1>
+		<div class="user-form">
+
+			<form method="post" th:action="@{/user/edit}" th:object="${userEditForm}">
+
+				<table class="table table-bordered">
+				<!-- メールアドレスの入力エリア -->
+				<tr>
+					<th class="active col-sm-3 text-nowrap">メールアドレス<br/> (ユーザーID)</th>
+					<td align="left">
+						<input type="text" class="form-control" th:field="*{userId}" readonly="readonly" style="background-color: transparent;">
+					</td>
+				</tr>
+				<!-- ユーザー名の入力エリア -->
+				<tr>
+					<th class="active">ユーザー名<br/> (表示名)</th>
+					<td align="left">
+						<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
+							<input type="text" class="form-control" th:field="*{userName}">
+							<span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">userName error</span>
+						</div>
+					</td>
+				</tr>
+				<!-- パスワードの入力エリア -->
+				<tr>
+					<th class="active">パスワード</th>
+					<td align="left">
+						(変更する場合のみ入力)
+						<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
+							<input type="password" class="form-control" th:field="*{password}">
+							<span class="text-danger" th:if="${#fields.hasErrors('passwordPatternValid')}" th:errors="*{passwordPatternValid}">password error</span>
+							<span class="text-danger" th:if="${#fields.hasErrors('passwordSizeValid')}" th:errors="*{passwordSizeValid}">password error</span>
+						</div>
+					</td>
+				</tr>
+				</table>
+
+				<button class="btn btn-primary" type="submit">保 存</button>
+
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,59 @@
+<div th:fragment="search_contents">
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="row">
+				<form class="navbar-form navbar-left" role="search" method="get" th:action="${'/search'}">
+					<div class="form-group">
+						<input type="text" name="query" th:value="${query}" size="50" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						検索
+					</button>
+				</form>
+
+				<div class="navbar-form">
+					<a th:href="@{'/post/new'}" class="btn btn-primary" role="button">質問する</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<p th:text="${numPosts + '件見つかりました'}"></p>
+		<div th:if="${numPosts > 0}">
+			<table class="table">
+				<tr th:each="post : ${postList}">
+					<td>
+						<h4>
+						<a th:href="@{'/post/'+${post.postId}}"><span th:utext="${post.postTitle}"></span></a>
+						</h4>
+
+						<h6>
+						<div class="search-post-msg"><p th:utext="${post.postMsg}"></p></div>
+						<p th:text="${'投稿日 : ' + #dates.format(post.createdAt, 'yyyy/MM/dd') + ' | 投稿者 : ' + post.postUserName + ' | 回答数 : ' + post.numReplies}"></p>
+						</h6>
+					</td>
+				</tr>
+			</table>
+
+			<nav aria-label="page navigation">
+				<ul class="pagination">
+					<li class="page-item" th:class="${page.first} ? 'disabled':''" style="display:inline">
+						<span th:if="${page.first}">&laquo;</span>
+						<a th:if="${not page.first}" th:href="@{${url}(page=0,query=${query})}">&laquo;</a>
+					</li>
+					<li class="page-item" th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
+						<span th:if='${i}==${page.number}' th:text='${i+1}'></span>
+						<a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i},query=${query})}">
+							<span th:text='${i+1}'></span>
+						</a>
+					</li>
+					<li class="page-item" th:class="${page.last} ? 'disabled':''" style="display:inline">
+						<span th:if="${page.last}">&raquo;</span>
+						<a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1),query=${query})}">&raquo;</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>

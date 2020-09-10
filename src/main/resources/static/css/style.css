@@ -1,0 +1,122 @@
+#header a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#header span {
+    color: #ffffff;
+}
+
+#header a:hover, a:focus {
+	color: #000000;
+}
+
+#header ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#header .navbar-brand {
+    font-size: 24px;
+	font-weight: 500;
+}
+
+#header .navbar {
+    background-color: #337ab7;
+    border-radius:0;
+    border-color: #337ab7;
+}
+
+pre {
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: pre-wrap;
+	/*background-color: #e7ebff;*/
+	/*background-color: white;*/
+}
+
+.search-post-msg {
+  	width: 100%;
+}
+
+.search-post-msg p {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+/*
+.view-post-msg {
+	border: 1px solid #C0C0C0;
+}
+*/
+
+.view-post-msg p {
+	white-space: pre-wrap;
+}
+
+/*
+.row {
+	margin-bottom: 20px;
+}
+*/
+
+.post-info {
+	background-color: #e7ebff;
+	font-size: small;
+	width: 200px;
+}
+
+.post-info p {
+	margin-top: 15px;
+}
+
+.post-info span {
+	margin-bottom: 15px;
+}
+
+hr {
+   border-width: 1px 0px 0px 0px; /* 太さ */
+   border-style: solid; /* 線種 */
+   border-color: #C0C0C0;   /* 線色 */
+   height: 1px;         /* 高さ(※古いIE用) */
+}
+
+section {
+	padding-bottom: 50px;
+}
+
+.table-login {
+	margin-bottom: 20px;
+}
+
+.table-login tr td {
+	padding: 5px;
+	text-align: right;
+}
+
+.post-detail .container-fluid {
+	padding-left: 30px;
+	padding-right: 40px;
+}
+
+.user-info-post-list {
+	margin-top: 50px;
+}
+
+.user-form {
+	margin-top: 40px;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+input:read-only {
+	border: 0;
+	box-shadow: none;
+	background-color: transparent;
+	pointer-events: none;
+}
